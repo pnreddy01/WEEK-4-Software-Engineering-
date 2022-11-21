@@ -1,32 +1,82 @@
+// PROGRAMM TITTLE : Calculating Fermat's Last Theorem of Near Misses
+
+// Name of the file that holds the program: hw1 text file.txt 
+
+// External files needed: N/A 
+
+// Names of programmers: 1. Nithish Reddy Pinninti 2. Bollapalli Pavan Sai Vishnu Teja 
+
+//Email address of programmers: 1. nithishreddypinnin@lewisu.edu 2. pavansaivishnuteja@lewisu.edu
+
+//Course and Section number: CPSC-60500-004 
+
+//Finished Date: 11-18-2022; Submitted Date: 11-20-2022 
+
+
+// Explanation of what the program does: The following program has been compiled to use an interactive interface to help users find near misses of the form ( x, y z, n, k)
+
+//The solutions are for the equation Xn + Yn = Zn (n is a power of the constants where x,y,z,n,k are positive integers) with conditions where 2<n<12, and 10<=x<=k with conditions 10<=y<=k.
+
+
+// The program runs an interface where the user will input the first condition for the formula, followed by the defining factors in the equation.
+// The final step is to define the variables applicable for the conditions.
+// To avoid overflow the limits for every condition will be stated.
+// The code is made using C++ in the code blocks compiler.
+
+// THE CODE AS BELOW
+// Include all the libraries needed to run C++ and maths in the language.
+
 #include <stdio.h>
 #include <iostream>
 #include <limits.h>
 #include <math.h>
 
+    // Define the main integer that will return at the end of the program.
+
 int main()
 {
+    // Define the first two conditions k and n
+
     int n = 0, k = 0;
+
+    // The first condition is n, the power that is used in the equation.
+
     while ((n <= 2) || (n >= 12))
         {
+
+            // The output query for the user enter n and ensuring its within the limits
+
             printf ("Enter integer n such that 2 < n < 12: ");
             scanf ("%d", &n);
-        }
+       }
+
+        // The second condition k is defined, which will be the range of test possibilities for x and y.
+       //  The program will define the condition and scan whether the condition is met.
+
         while (k <= 10)
             {
                 printf ("Enter upper limit k for x and y (k > 10): ");
                 scanf ("%d", &k);
             }
+      // The next step is looking for the near misses.
+      // The code will look for integers x,y,and z
     int miss = INT_MAX;
     double relativMiss = INT_MAX;
     for (int x = 10; x <= k; x++)
         for (int y = 10; y <= k; y++)
             {
+        // Defining Fermat's theorem of where there should be no equation such that (xn + yn= zn) Where n are the powers
+        // The code will loop for each integer x,y and z
+        // The condition will check for an overflow
         long lhs = (int) (pow (x, n) + pow (y, n));
     if (lhs < 0)
         {
             printf ("OVERFLOW ERROR!! Choose lower values of n and k");
         return 0;
         }
+        // The program will check for near misses if all conditions are satisfied.
+
+
         int z = (int) pow (lhs, 1.0/n);
         int diff = lhs - pow (z, n);
         if ((pow (z + 1, n) - lhs) < diff)
@@ -34,6 +84,8 @@ int main()
                 diff = pow (z + 1, n) - lhs;
               z++;
         }
+        // Check for all available conditions
+
         double relDiff = 100. * diff / lhs;
         if (relDiff < relativMiss)
             {
